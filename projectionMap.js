@@ -30,8 +30,8 @@ async function setup() {
 
 
 /////////////////GRID///////////////////////////////////
-  quadMap2 = pMapper.createQuadMap(1000, 1000, 20, 20);
-  GridBuf = createGraphics(1000, 1000);
+  quadMap2 = pMapper.createQuadMap(500, 500, 20, 20);
+  GridBuf = createGraphics(500,500);
   GridBuf.background(0);
 
   columns = ceil(GridBuf.width / 50);
