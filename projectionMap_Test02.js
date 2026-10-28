@@ -1,3 +1,4 @@
+
 ///////REFERENCE///////////////////////
 let pMapper;
 let quadMap;
@@ -63,7 +64,7 @@ let ballModels = [];
 let pickedImg = [0, 0, 0, 0, 0];
 let selectedBall = 0;
 
-let ballR = 43;
+let ballR = 55;
 let stringLen = 600;
 let stringTop = 65 - stringLen;
 let tilt = Math.atan2(240, 850); // camera looks down a bit, so tilt the photos up to face it
@@ -144,9 +145,9 @@ HeesooBuf = createGraphics(1000,700);
 
 ///////////Skylar//////////////////////////////////////////
 
-quadMap5 = pMapper.createQuadMap(850, 520, 20, 20);
+quadMap5 = pMapper.createQuadMap(860, 430, 20, 20);
 // framebuffer instead of createGraphics: mine is 3D, and a WEBGL graphics can't use camera() / model()
-SkylarBuf = createFramebuffer({ width: 850, height: 520 });
+SkylarBuf = createFramebuffer({ width: 860, height: 430 });
 
   for (let i = 0; i < eras.length; i++) {
     ballImgs[i] = [];
@@ -484,7 +485,7 @@ function skylar(fb) {
   background(0);
   textureMode(NORMAL);
   ortho(-fb.width / 2, fb.width / 2, -fb.height / 2, fb.height / 2, 0, 3000);
-  camera(0, -240, 850, 0, 0, 0, 0, 1, 0);
+  camera(0, -320, 850, 0, -80, 0, 0, 1, 0); // camera + target both moved up 80, so the balls sit near the bottom
 
   let pos = [];
   for (let i = 0; i < 5; i++) {
