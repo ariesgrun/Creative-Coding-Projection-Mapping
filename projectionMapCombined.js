@@ -21,6 +21,23 @@ let bg;
 let quadMap3;
 let YuqiBuf;
 
+//////////////////////////////////////////////////////////////////////
+//Heesoo's
+
+let aquariumVideo;
+
+let fishX = [];
+let fishY = [];
+let fishSpeed = [];
+let fishSize = [];
+let fishDirection = [];
+let fishTurn = [];
+let numFish = 8;
+
+let quadMap4;
+let HeesooBuf;
+
+
 
 
 //////////////////////////////////////////////////////////////////////
@@ -63,7 +80,28 @@ bg = await loadImage('../images/yuqiBackground.png');
 quadMap3 = pMapper.createQuadMap(600,700,20,20);
 YuqiBuf = createGraphics(600,700);
 
+///////////Heesoo//////////////////////////////////////////
 
+quadMap4 = pMapper.createQuadMap(1000,700,20,20);
+HeesooBuf = createGraphics(1000,700);
+
+
+  // Video
+  aquariumVideo = createVideo('../images/42696-432087106_medium.mp4');
+  aquariumVideo.hide();
+  aquariumVideo.volume(0);
+  aquariumVideo.loop();
+  aquariumVideo.speed(10);
+
+  // Fish
+  for (let i = 0; i < numFish; i++) {
+    fishX[i] = random(150, HeesooBuf.width - 150);
+    fishY[i] = random(100, HeesooBuf.height - 100);
+    fishSpeed[i] = random(0.5, 2);
+    fishSize[i] = random(0.4, 0.6);
+    fishDirection[i] = 1;
+    fishTurn[i] = 1;
+  }
 
   // pMapper.load("maps/map.json");
 }
@@ -81,12 +119,15 @@ function draw() {
   yuqi(YuqiBuf);
   quadMap3.displayTexture(YuqiBuf);
 
+  ////Heesoo////////////////////////
+    heesoo(HeesooBuf);
+    quadMap4.displayTexture(HeesooBuf);
 
 
 }
 
 
-//////////////////////////////////////////////////////////////////////
+////////LAWRENCE//////////////////////////////////////////////////////////////
 function sandFall(pg) {
   pg.background(0);
     totalSqauares = 0;
@@ -238,9 +279,147 @@ pg.image(bg, 0, 0, 600, 700);
    }
 
 }
+/////////////Heesoo/////////////////////////////////////
 
 
 
+function heesoo(pg){
+  pg.background(0, 0, 6);
+
+  drawScreen(pg);
+
+  for (let i = 0; i < numFish; i++) {
+
+    fishTurn[i] = lerp(
+      fishTurn[i],
+      fishDirection[i],
+      0.08
+    );
+
+    fishX[i] += fishSpeed[i] * fishTurn[i];
+
+    if (fishX[i] > pg.width - 150) {
+      fishDirection[i] = -1;
+    }
+
+    if (fishX[i] < 150) {
+      fishDirection[i] = 1;
+    }
+
+    let swimY = fishY[i] +
+      sin(frameCount * 0.03 + i) * 10;
+
+    pg.push();
+
+    pg.translate(fishX[i], swimY);
+    pg.scale(fishTurn[i], 1);
+
+    drawFish(pg, 0, 0, fishSize[i]);
+
+    pg.pop();
+  }
+
+
+}
+
+
+
+
+function drawScreen(pg) {
+  pg.push();
+
+  pg.drawingContext.filter = 'blur(10px)';
+  pg.noStroke();
+
+  // Blue screen background
+  pg.fill(3, 0, 209);
+  pg.rect(50, 150, 900, 400);
+
+  // White window bar
+  pg.fill(245);
+  pg.rect(50, 150, 900, 50);
+
+  // Red button
+  pg.fill(255, 80, 75);
+  pg.circle(80, 175, 16);
+
+  // Yellow button
+  pg.fill(255, 190, 45);
+  pg.circle(106, 175, 16);
+
+  // Green button
+  pg.fill(60, 200, 95);
+  pg.circle(132, 175, 16);
+
+  pg.tint(255, 115);
+    pg.image(aquariumVideo, 50, 150, 900, 400);
+    pg.noTint();
+
+  pg.drawingContext.filter = 'none';
+
+  pg.pop();
+}
+
+
+function drawFish(pg, x, y, s) {
+  pg.push();
+
+  pg.translate(x, y);
+  pg.scale(s);
+  pg.translate(-250, -250);
+
+  // Argami hair
+  pg.fill(190, 5, 45);
+  pg.noStroke();
+  pg.quad(190, 160, 110, 229, 180, 280, 240, 240);
+
+  // Head
+  pg.fill(255, 20, 56);
+  pg.stroke(117, 1, 252);
+  pg.strokeWeight(3);
+  pg.ellipse(250, 250, 150, 80);
+
+  // Body
+  pg.noStroke();
+  pg.fill(210, 19, 230);
+  pg.ellipse(196, 260, 130, 120);
+
+  pg.fill(255, 20, 56);
+  pg.ellipse(196, 266, 130, 120);
+
+  // Tail
+  pg.fill(255, 20, 56);
+  pg.triangle(30, 350, 170, 280, 80, 260);
+
+  pg.stroke(196, 20, 120);
+  pg.triangle(30, 220, 90, 280, 180, 260);
+
+  // Argami hand
+  pg.fill(242, 99, 80);
+  pg.stroke(255, 30, 60);
+  pg.triangle(190, 280, 260, 280, 150, 320);
+
+  // Eye outside
+  pg.fill(227, 146, 80);
+  pg.stroke(255, 80, 51);
+  pg.strokeWeight(1);
+  pg.ellipse(290, 250, 30, 30);
+
+  // Eye
+  pg.fill(0);
+  pg.stroke(233, 207, 151);
+  pg.strokeWeight(1);
+  pg.ellipse(290, 250, 20, 20);
+
+  pg.pop();
+}
+
+function mousePressed() {
+  aquariumVideo.loop();
+}
+
+
+////////////////////////////////////////////////////////
 function keyPressed() {
   if (key === "c") pMapper.toggleCalibration();
   if (key === "s") pMapper.save("map.json");
