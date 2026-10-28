@@ -41,13 +41,13 @@ bg = await loadImage('../images/yuqiBackground.png');
 
 
 /////////////////Lawrence Sandfall///////////////////////////////////
-  quadMap2 = pMapper.createQuadMap(1000, 1000, 20, 20); //(map width, map height, columns/ rows)
-  sandFallBuf = createGraphics(1000, 1000);
+  quadMap2 = pMapper.createQuadMap(500, 500, 20, 20); //(map width, map height, columns/ rows)
+  sandFallBuf = createGraphics(500, 500);
   sandFallBuf.background(0);
 
 
-  columns = ceil(width / 10);
-    rows = ceil(height / 10);
+  columns = ceil(500 / 10);
+    rows = ceil(500 / 10);
   for(let i = 0; i < columns ; i++) {
         grid[i] = [];
         for (let j = 0; j < rows; j++) {
@@ -138,9 +138,11 @@ function sandFall(pg) {
     }
   }
 }
-/////////////////////////////////////////////////////////////////////
 
 
+
+
+/////////////////yuqi////////////////////////////////////////////////////
 function yuqi(pg){
 pg.image(bg, 0, 0, 600, 700);
 
