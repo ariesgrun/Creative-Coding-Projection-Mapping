@@ -1,6 +1,9 @@
 
-
 function setup() {
+
+
+
+//////////////Lawrence/////////////////////////////////////
   createCanvas(windowWidth, windowHeight);
   columns = ceil(width / 10);
     rows = ceil(height / 10);
@@ -14,13 +17,14 @@ function setup() {
             };
         }
     }
+    ////////////////////////////////////////////////////////////
 }
 
 let columns;
 let rows;
 let grid = [];
 let totalSqauares = 0;
-
+///////////////////////////////////////
 function draw() {
     // let gridPosition = grid[i][j];
     background(0)
